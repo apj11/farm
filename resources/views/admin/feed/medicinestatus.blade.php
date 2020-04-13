@@ -1,0 +1,175 @@
+@extends('admin.layout.app')
+@section('content')
+
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Top Bar Start -->
+
+        <!-- Top Bar End -->
+
+
+        <!-- ========== Left Sidebar Start ========== -->
+
+
+        <!-- Left Sidebar End -->
+
+        <!-- Start right Content here -->
+
+        <div class="content-page">
+            <!-- Start content -->
+            <div class="content">
+                <div class="container">
+
+                    <!-- Page-Title -->
+                    <!--  <div class="row">
+                         <div class="col-sm-12">
+                             <div class="page-header-title">
+                                 <h4 class="pull-left page-title">Typography</h4>
+                                 <ol class="breadcrumb pull-right">
+                                     <li><a href="#">Xadmino</a></li>
+                                     <li class="active">Typography</li>
+                                 </ol>
+                                 <div class="clearfix"></div>
+                             </div>
+                         </div>
+                     </div> -->
+
+
+
+
+
+
+
+
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="panel panel-primary">
+                                <div class="row">
+                                    <div class="panel_pad">
+
+                                        <div class="col-md-4">
+                                            <div class="form-group flex_form">
+                                                <label class="control-label">Animal Tag</label>
+                                                <div class="col-md-10">
+                                                    <input type="text" class="form-control" placeholder="1234">
+                                                </div>
+                                            </div>
+                                        </div><!-- col -->
+                                        <div class="col-md-4">
+                                            <div class="form-group flex_form">
+                                                <label class="control-label">Category</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control">
+                                                        <option>Cow</option>
+                                                        <option>Dog</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div><!-- col -->
+
+                                    </div><!-- panel_pad -->
+                                </div><!-- row -->
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="update_blk">
+                                <h3>Medicine feed Update</h3>
+
+                                <div class="panel-body pt-0">
+                                    <table id="datatable-resp   onsive" class="table table-striped table-bordered dt-responsive nowrap table_label_check" cellspacing="0" width="100%">
+                                        <thead>
+{{--                                        @foreach($animalmedicine as $key=>$animalmedicines )--}}
+                                            {{--                                                            <tr id="categories{{$animalmedicines->id}}">--}}
+                                            {{--                                                                <td>{{++$key}}</td>--}}
+                                            <td>{{$animalmedicine->medicine_id}}</td>
+                                            <td>{{$animalmedicine->startdate}} / {{$animalmedicine->enddate}}</td>
+
+<td>
+
+    <input data-id="{{$animalmedicine->id}}" class="toggle-class" type="checkbox" data-onstyle="success" data-offstyle="danger" data-toggle="toggle" data-on="Active" data-off="InActive" {{ $animalmedicine->status ? 'checked' : '' }}>{{$animalmedicine->time}}
+</td>
+
+{{--                                            <th><span class="block_element"> <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"><label for="vehicle1"> {{$animalmedicine->time}}</label></span>--}}
+{{--                                                --}}{{--                                                                    <span class="block_element"> <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike"><label for="vehicle1"> 02:00 A.M</label></span>--}}
+{{--                                            </th>--}}
+{{--<td class="font_style"><a href="{{route('categories.show', $errors->id)}}"><i class="ion-search"></i></a><a href="{{route('categories.edit',$errors->id)}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><a onclick="return confirm('Are you sure you want to delete this item?');" href="{{route('categories.destroy',$errors->id)}}"><i class="ion-trash-a"></i></a></td>--}}
+                                            </tr>
+{{--                                        @endforeach--}}
+                                        </thead>
+                                        <!--   <tbody>
+                                              <tr>
+                                                  <td>1</td>
+                                                  <td>1234567</td>
+                                                  <td><span> <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+<label for="vehicle1"> 10 A.M</label></span>
+                                                  </td>
+
+
+                                              </tr>
+
+                                          </tbody> -->
+                                    </table>
+
+                                </div>
+                                <div class="add_btn btn_update">
+                                    <button type="submit"  ><i class="fa fa-floppy-o"></i>Change Status</button>
+                                </div>
+{{--                                <div class="add_btn btn_update">--}}
+{{--                                    <a href="#">Submit</a>--}}
+{{--                                </div>--}}
+                            </div><!-- update_blk -->
+
+                        </div><!-- col -->
+
+                    </div> <!-- End Row -->
+
+
+                </div> <!-- container -->
+
+            </div> <!-- content -->
+
+
+
+        </div>
+        <!-- End Right content here -->
+
+    </div>
+    <!-- END wrapper -->
+    <script src="{{asset('dist/sweetalert.min.js')}}"></script>
+    @push('scripts')
+        <script>
+
+            $(".toggle-class").click(function (e) {
+
+                var status = $(this).prop('checked') == true ? 1 : 0;
+                var animalmedicines_id= $(this).data('id');
+
+                $.ajax({
+
+                    url:"changeStatus",
+                    type:"POST",
+                    data:{
+
+                        animalmedicines_id:animalmedicines_id,
+                        status:status,
+                        _token:"{{csrf_token()}}"
+                    },
+
+                    success:function (data) {
+
+                        console.log(data);
+                    },
+                    errors:function (error) {
+
+                    }
+                });
+
+
+            });
+
+
+        </script>
+@endsection
